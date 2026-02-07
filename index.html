@@ -110,24 +110,165 @@ footer {
   text-align: center;
   padding: 15px;
 }
+
+.tagline {
+  font-size: 20px;
+  margin-top: 10px;
+  opacity: 0.9;
+}
+
+.hero-points {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  margin: 25px 0;
+  font-size: 16px;
+}
+
+.hero-buttons {
+  margin-top: 30px;
+}
+
+.hero-buttons button {
+  padding: 12px 22px;
+  margin: 5px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  background: white;
+  color: black;
+}
+
+.hero-buttons .outline {
+  background: transparent;
+  border: 2px solid white;
+  color: white;
+}
+
+.rating {
+  margin: 6px 0;
+  font-size: 14px;
+  color: #f5a623;
+}
+
+.rating span {
+  color: #555;
+  font-size: 13px;
+}
+
+.badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: #ff3d00;
+  color: white;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 5px;
+  text-transform: uppercase;
+  z-index: 10;
+}
+
+.video-banner {
+  position: relative;
+  height: 90vh;
+  overflow: hidden;
+}
+
+.video-banner video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.video-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+}
+
+.video-overlay h1 {
+  font-size: 48px;
+  letter-spacing: 3px;
+}
+
+.video-overlay p {
+  font-size: 18px;
+  margin: 10px 0 20px;
+}
+
+.video-overlay button {
+  padding: 12px 24px;
+  background: #ff3d00;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
 </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
-<header>
-  <div style="display:flex; align-items:center; gap:10px;">
+ <!-- HEADER -->
+<header class="main-header">
+  <div class="brand">
     <img src="logo.png" alt="Flexora Fusion Logo">
-    <b>FLEXORA FUSION</b>
+    <span>FLEXORA FUSION</span>
   </div>
-  <button id="cartBtn" onclick="toggleCart()">🛒 Cart (<span id="cartCount">0</span>)</button>
+
+  <button id="cartBtn" onclick="toggleCart()">
+    🛒 Cart (<span id="cartCount">0</span>)
+  </button>
+</header>
+
+<!-- VIDEO BANNER -->
+<section class="video-banner">
+  <video autoplay muted loop playsinline>
+    <source src="banner.mp4" type="video/mp4">
+  </video>
+
+  <div class="video-overlay">
+    <h1>FLEXORA FUSION</h1>
+    <p>Premium Streetwear • Trendy Comfort</p>
+    <button onclick="document.querySelector('.container').scrollIntoView({behavior:'smooth'})">
+      Shop Now
+    </button>
+  </div>
+</section>
+
 </header>
 
 <!-- HERO -->
 <div class="hero">
   <h1>FLEXORA FUSION</h1>
-  <p>Premium Clothing • Modern Style • Everyday Comfort</p>
+  <p class="tagline">
+    Elevate Your Style • Premium T-Shirts for Everyday Confidence
+  </p>
+
+  <div class="hero-points">
+    <div>✔ Premium Fabric</div>
+    <div>✔ Perfect Fit </div>
+    <div>✔ Affordable Luxury</div>
+  </div>
+
+  <div class="hero-buttons">
+    <button onclick="document.querySelector('.container').scrollIntoView({behavior:'smooth'})">
+      🛍 Shop Now
+    </button>
+    <button onclick="toggleCart()" class="outline">
+      🛒 View Cart
+    </button>
+  </div>
 </div>
 
 <!-- PRODUCTS -->
@@ -138,6 +279,9 @@ footer {
     <img src="tshirt.jpeg">
     <h3>Beige Premium T-Shirt</h3>
     <p>₹499</p>
+    <div class="rating">
+  ⭐⭐⭐⭐⭐ <span>(4.9/5 • 150+ Reviews)</span>
+</div>
 
     <select id="size1">
       <option value="">Select Size</option>
@@ -156,6 +300,9 @@ footer {
     <img src="tshirt2.jpeg">
     <h3>Urban Printed T-Shirt</h3>
     <p>₹499</p>
+    <div class="rating">
+  ⭐⭐⭐⭐⭐ <span>(4.7/5 • 120+ Reviews)</span>
+</div>
 
     <select id="size2">
       <option value="">Select Size</option>
