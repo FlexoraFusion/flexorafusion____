@@ -185,6 +185,12 @@ footer {
   <button onclick="whatsappOrder()" style="width:100%; background:green; color:white;">
     🟢 Order on WhatsApp
   </button>
+
+  <!-- UPI PAYMENT BUTTON -->
+  <button onclick="payNow()" style="width:100%; background:#1a73e8; color:white; margin-top:8px;">
+    💳 Pay via UPI (GPay / PhonePe / Paytm)
+  </button>
+
 </div>
 
 <footer>
@@ -273,6 +279,60 @@ ${items}
 Total: ₹${total}`;
 
   window.open("https://wa.me/918733882916?text=" + encodeURIComponent(msg));
+}
+</script>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+<script>
+function payNow() {
+  if (cart.length === 0) {
+    alert("Cart is empty");
+    return;
+  }
+
+  const name = custName.value;
+  const phone = custPhone.value;
+  const address = custAddress.value;
+
+  if (!name || !phone || !address) {
+    alert("Please fill delivery details");
+    return;
+  }
+
+  let total = 0;
+  cart.forEach(item => {
+    total += item.price * item.qty;
+  });
+
+  const options = {
+    key: "rzp_test_ABC123XYZ", // 🔴 Replace with your Razorpay key
+    amount: total * 100,
+    currency: "INR",
+    name: "Flexora Fusion",
+    description: "Clothing Order",
+    method: {
+      upi: true
+    },
+    prefill: {
+      name: name,
+      contact: phone
+    },
+    handler: function (response) {
+      alert("✅ Payment Successful");
+      whatsappOrder(); // send order details
+    },
+    theme: {
+      color: "#000000"
+    }
+  };
+
+  const rzp = new Razorpay(options);
+  rzp.open();
 }
 </script>
 
