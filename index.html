@@ -1,0 +1,252 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Flexora Fusion | Premium Clothing Brand</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: #f7f7f7;
+    }
+
+    /* HERO SECTION */
+    .hero {
+      background: linear-gradient(135deg, #000, #333);
+      color: white;
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 42px;
+      margin-bottom: 10px;
+      letter-spacing: 2px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      opacity: 0.9;
+    }
+
+    /* CART BUTTON */
+    #cartBtn {
+      position: fixed;
+      top: 15px;
+      right: 20px;
+      background: black;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      z-index: 1000;
+    }
+
+    /* PRODUCT SECTION */
+    .container {
+      display: flex;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    .product {
+      background: white;
+      width: 280px;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    .product img {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    .product h2 {
+      margin: 15px 0 5px;
+    }
+
+    .price {
+      font-size: 20px;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+
+    button {
+      padding: 10px 14px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+
+    .add-btn {
+      background: black;
+      color: white;
+      width: 100%;
+    }
+
+    /* CART BOX */
+    #cartBox {
+      display: none;
+      position: fixed;
+      top: 60px;
+      right: 20px;
+      width: 300px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      padding: 15px;
+      z-index: 999;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .cart-item button {
+      padding: 4px 8px;
+    }
+
+    /* FOOTER */
+    footer {
+      background: #000;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      font-size: 14px;
+    }
+    .logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo img {
+  height: 45px;
+}
+  </style>
+
+  <div class="logo">
+  <img src="logo.png" alt="Flexora Fusion Logo">
+  <span>FLEXORA FUSION</span>
+</div>
+</head>
+
+<body>
+
+<!-- HERO / FIRST PAGE -->
+<div class="hero">
+  <h1>FLEXORA FUSION</h1>
+  <p>Premium Clothing • Modern Style • Everyday Comfort</p>
+</div>
+
+<!-- CART BUTTON -->
+<button id="cartBtn" onclick="toggleCart()">
+  🛒 Cart (<span id="cartCount">0</span>)
+</button>
+
+<!-- PRODUCT -->
+<div class="container">
+  <div class="product">
+    <img src="tshirt.jpeg" alt="Flexora Fusion T-Shirt">
+    <h2>Flexora Fusion™ Beige colour Premium T-Shirt</h2>
+    <p>French Terry cotton • oversized • Long-lasting comfort</p>
+    <div class="price">₹499</div>
+    <button class="add-btn" onclick="addToCart()">Add to Cart</button>
+  </div>
+</div>
+
+<!-- CART BOX -->
+<div id="cartBox">
+  <h3>Your Cart</h3>
+  <div id="cartItems"></div>
+  <p><b>Total: ₹<span id="total">0</span></b></p>
+  <button onclick="checkout()">💳 Checkout</button>
+  <button onclick="whatsappOrder()">🟢 Buy on WhatsApp</button>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  © 2026 FLEXORA FUSION • Contact: 8733882916
+</footer>
+
+<!-- JAVASCRIPT -->
+<script>
+let cart = [];
+const price = 499;
+
+function addToCart() {
+  cart.push({ qty: 1 });
+  renderCart();
+}
+
+function renderCart() {
+  const cartItems = document.getElementById("cartItems");
+  cartItems.innerHTML = "";
+  let total = 0;
+
+  cart.forEach((item, index) => {
+    total += item.qty * price;
+
+    cartItems.innerHTML += `
+      <div class="cart-item">
+        <span>
+          <button onclick="changeQty(${index}, -1)">-</button>
+          ${item.qty}
+          <button onclick="changeQty(${index}, 1)">+</button>
+        </span>
+        <button onclick="removeItem(${index})">❌</button>
+      </div>
+    `;
+  });
+
+  document.getElementById("total").innerText = total;
+  document.getElementById("cartCount").innerText = cart.length;
+}
+
+function changeQty(i, change) {
+  cart[i].qty += change;
+  if (cart[i].qty <= 0) cart.splice(i, 1);
+  renderCart();
+}
+
+function removeItem(i) {
+  cart.splice(i, 1);
+  renderCart();
+}
+
+function toggleCart() {
+  const box = document.getElementById("cartBox");
+  box.style.display = box.style.display === "block" ? "none" : "block";
+}
+
+function checkout() {
+  alert("Checkout coming soon!");
+}
+
+function whatsappOrder() {
+  if (cart.length === 0) {
+    alert("Your cart is empty!");
+    return;
+  }
+
+  const msg =
+    "Hello, I want to buy Flexora Fusion Beige colour Premium T-Shirt.\n" +
+    "Total: ₹" + document.getElementById("total").innerText;
+
+  window.open(
+    "https://wa.me/918733882916?text=" + encodeURIComponent(msg)
+  );
+}
+</script>
+
+</body>
+</html>
