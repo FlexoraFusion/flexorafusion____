@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Orders | FLEXORA FUSION</title>
+  <style>
+    .order {
+      border:1px solid #ddd;
+      padding:15px;
+      margin:10px;
+      border-radius:8px;
+    }
+  </style>
+</head>
+<body>
+
+<h2>📦 My Orders</h2>
+<div id="orders"></div>
+
+<script>
+if (localStorage.getItem("isLoggedIn") !== "true") {
+  window.location.href = "login.html";
+}
+
+const phone = localStorage.getItem("loginPhone");
+const orders = JSON.parse(localStorage.getItem("orders")) || [];
+const box = document.getElementById("orders");
+
+const myOrders = orders.filter(o => o.phone === phone);
+
+if (myOrders.length === 0) {
+  box.innerHTML = "<p>No orders yet</p>";
+}
+
+myOrders.forEach(o => {
+  box.innerHTML += `
+    <div class="order">
+      <h3>Order ID: ${o.orderId}</h3>
+      <p>${o.date}</p>
+      <p><b>Total:</b> ₹${o.total}</p>
+      <p><b>Items:</b></p>
+      <ul>
+        ${o.items.map(i => `<li>${i.name} (${i.size}) x ${i.qty}</li>`).join("")}
+      </ul>
+    </div>
+  `;
+});
+</script>
+
+</body>
+</html>

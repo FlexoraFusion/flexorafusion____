@@ -21,6 +21,8 @@ header {
   color: white;
 }
 
+
+
 header img {
   height: 40px;
 }
@@ -44,11 +46,12 @@ header img {
 
 /* PRODUCTS */
 .container {
-  display: flex;
-  gap: 20px;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* ✅ 2 products per row */
+  gap: 30px;
   padding: 40px;
-  flex-wrap: wrap;
+  max-width: 700px;   /* keeps layout premium & centered */
+  margin: auto;
 }
 
 .product {
@@ -91,6 +94,9 @@ header img {
   border-radius: 10px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.3);
 }
+<button onclick="viewOrder()" style="width:100%; background:#000; color:white; margin-top:8px;">
+  📦 View My Order
+</button>
 
 .cart-item {
   display: flex;
@@ -173,7 +179,8 @@ footer {
 
 .video-banner {
   position: relative;
-  height: 90vh;
+  height: 55vh;   /* 👈 reduced height */
+  min-height: 380px;
   overflow: hidden;
 }
 
@@ -196,13 +203,13 @@ footer {
 }
 
 .video-overlay h1 {
-  font-size: 48px;
-  letter-spacing: 3px;
+  font-size: 36px;
+  letter-spacing: 2px;
 }
 
 .video-overlay p {
-  font-size: 18px;
-  margin: 10px 0 20px;
+  font-size: 15px;
+  opacity: 0.9;
 }
 
 .video-overlay button {
@@ -214,12 +221,218 @@ footer {
   cursor: pointer;
 }
 
+/* PRODUCT HOVER ANIMATION */
+.product {
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.product:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.25);
+}
+
+/* IMAGE ZOOM ON HOVER */
+.product img {
+  transition: transform 0.5s ease;
+}
+
+.product:hover img {
+  transform: scale(1.08);
+}
+
+/* BUTTON HOVER */
+.product button:hover {
+  background: #ff3d00;
+  color: white;
+}
+
+/* SIZE DROPDOWN HOVER */
+.product select:hover {
+  border: 1px solid #ff3d00;
+}
+
+/* PAGE FADE-IN */
+body {
+  animation: pageFade 0.8s ease-in forwards;
+}
+
+@keyframes pageFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* PRODUCT FADE-IN */
+.product {
+  opacity: 0;
+  transform: translateY(40px);
+  animation: productFade 0.8s ease forwards;
+}
+
+.product:nth-child(1) { animation-delay: 0.2s; }
+.product:nth-child(2) { animation-delay: 0.4s; }
+.product:nth-child(3) { animation-delay: 0.6s; }
+.product:nth-child(4) { animation-delay: 0.8s; }
+
+@keyframes productFade {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* SOFT SLIDE-UP LUXURY ANIMATION */
+.fade-up {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeUp 0.8s ease-out forwards;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.luxury-banner {
+  height: 60vh;
+  background: linear-gradient(
+    135deg,
+    #000000 0%,
+    #0e0e0e 50%,
+    #000000 100%
+  );
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: white;
+  padding: 40px 20px;
+}
+
+.luxury-banner h1 {
+  font-size: 3rem;
+  letter-spacing: 3px;
+  margin-bottom: 12px;
+}
+
+.luxury-banner p {
+  font-size: 1.1rem;
+  color: #ccc;
+  margin-bottom: 28px;
+}
+
+.luxury-actions {
+  display: flex;
+  gap: 15px;
+}
+
+.luxury-actions button {
+  padding: 12px 28px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  background: #ff4d00;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.luxury-actions button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255,77,0,0.4);
+}
+
+.luxury-actions .outline {
+  background: transparent;
+  border: 1px solid #666;
+}
+
+/* 📱 Mobile Optimization */
+@media (max-width: 768px) {
+
+  /* Banner */
+  .luxury-banner {
+    height: 50vh;
+    padding: 25px 15px;
+  }
+
+  .luxury-banner h1 {
+    font-size: 2rem;
+    letter-spacing: 2px;
+  }
+
+  .luxury-banner p {
+    font-size: 0.95rem;
+  }
+
+  .luxury-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .luxury-actions button {
+    width: 100%;
+    padding: 14px;
+    font-size: 1rem;
+  }
+
+  /* Header */
+  header {
+    padding: 10px 15px;
+  }
+
+  /* Cart Button Fixed */
+  .cart-btn {
+    position: fixed;
+    bottom: 18px;
+    right: 18px;
+    z-index: 999;
+    padding: 14px 16px;
+    border-radius: 50%;
+    background: #ff4d00;
+    color: white;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+  }
+
+  /* Product Grid */
+  .products {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 20px 12px;
+  }
+
+  .product-card {
+    border-radius: 14px;
+  }
+
+  .product-card img {
+    height: 220px;
+    object-fit: cover;
+  }
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
 </style>
 </head>
 
 <body>
 
- <!-- HEADER -->
+<!-- HEADER -->
 <header class="main-header">
   <div class="brand">
     <img src="logo.png" alt="Flexora Fusion Logo">
@@ -231,29 +444,27 @@ footer {
   </button>
 </header>
 
+
 <!-- VIDEO BANNER -->
 <section class="video-banner">
-  <video autoplay muted loop playsinline>
+  <video autoplay muted loop>
     <source src="banner.mp4" type="video/mp4">
   </video>
-
   <div class="video-overlay">
-    <h1>FLEXORA FUSION</h1>
-    <p>Premium Streetwear • Trendy Comfort</p>
+    <h1>Luxury Streetwear</h1>
     <button onclick="document.querySelector('.container').scrollIntoView({behavior:'smooth'})">
       Shop Now
     </button>
   </div>
-</section>
+</section
+ 
 
-</header>
 
 <!-- HERO -->
 <div class="hero">
-  <h1>FLEXORA FUSION</h1>
-  <p class="tagline">
-    Elevate Your Style • Premium T-Shirts for Everyday Confidence
-  </p>
+ <h1 class="fade-up">FLEXORA FUSION</h1>
+<p class="tagline fade-up">Elevate Your Style • Premium T-Shirts</p>
+
 
   <div class="hero-points">
     <div>✔ Premium Fabric</div>
@@ -275,7 +486,7 @@ footer {
 <div class="container">
 
   <!-- PRODUCT 1 -->
-  <div class="product">
+  <div class="product fade-up">
     <img src="tshirt.jpeg">
     <h3>Beige Premium T-Shirt</h3>
     <p>₹499</p>
@@ -296,9 +507,9 @@ footer {
   </div>
 
   <!-- PRODUCT 2 -->
-  <div class="product">
+ <div class="product fade-up">
     <img src="tshirt2.jpeg">
-    <h3>Urban Printed T-Shirt</h3>
+    <h3>PORSCHE PREMIUM Black T-Shirt</h3>
     <p>₹499</p>
     <div class="rating">
   ⭐⭐⭐⭐⭐ <span>(4.7/5 • 120+ Reviews)</span>
@@ -311,10 +522,101 @@ footer {
       <option value="XL">XL</option>
     </select>
 
-    <button onclick="addToCart('Urban Printed T-Shirt', 499, document.getElementById('size2').value)">
+    <button onclick="addToCart('PORSCHE PREMIUM Black T-Shirt', 499, document.getElementById('size2').value)">
       Add to Cart
+  
     </button>
   </div>
+<!-- PRODUCT 3 -->
+<div class="product fade-up">
+  <img src="tshirt3.jpeg">
+  <h3>BMW Premium Black T-Shirt</h3>
+  <p>₹499</p>
+
+  <div class="rating">
+    ⭐⭐⭐⭐⭐ <span>(4.8/5 • 180+ Reviews)</span>
+  </div>
+
+  <select id="size3">
+    <option value="">Select Size</option>
+    <option value="M">M</option>
+    <option value="L">L</option>
+    <option value="XL">XL</option>
+  </select>
+
+  <button onclick="addToCart('BMW Premium Black T-Shirt', 499, document.getElementById('size3').value)">
+    Add to Cart
+  </button>
+</div>
+
+<!-- PRODUCT 4 -->
+<div class="product fade-up">
+  <img src="tshirt4.jpeg">
+  <h3>LA premium Black T-Shirt</h3>
+  <p>₹499</p>
+
+  <div class="rating">
+    ⭐⭐⭐⭐⭐ <span>(4.9/5 • 210+ Reviews)</span>
+  </div>
+
+  <select id="size4">
+    <option value="">Select Size</option>
+    <option value="M">M</option>
+    <option value="L">L</option>
+    <option value="XL">XL</option>
+  </select>
+
+  <button onclick="addToCart('LA premium Black T-Shirt', 499, document.getElementById('size4').value)">
+    Add to Cart
+  </button>
+
+</div>
+
+<!-- PRODUCT 5 -->
+<div class="product fade-up">
+  <img src="tshirt5.jpeg">
+  <h3>AMG premium Black T-Shirt</h3>
+  <p>₹499</p>
+
+  <div class="rating">
+    ⭐⭐⭐⭐⭐ <span>(4.8/5 • 190+ Reviews)</span>
+  </div>
+
+  <select id="size4">
+    <option value="">Select Size</option>
+    <option value="M">M</option>
+    <option value="L">L</option>
+    <option value="XL">XL</option>
+  </select>
+
+  <button onclick="addToCart('AMG premium Black T-Shirt', 499, document.getElementById('size4').value)">
+    Add to Cart
+  </button>
+
+</div>
+
+<!-- PRODUCT 6 -->
+<div class="product fade-up">
+  <img src="tshirt6.jpeg">
+  <h3>BACK PRINT premium Black T-Shirt</h3>
+  <p>₹499</p>
+
+  <div class="rating">
+    ⭐⭐⭐⭐⭐ <span>(4.5/5 • 140+ Reviews)</span>
+  </div>
+
+  <select id="size4">
+    <option value="">Select Size</option>
+    <option value="M">M</option>
+    <option value="L">L</option>
+    <option value="XL">XL</option>
+  </select>
+
+  <button onclick="addToCart('BACK PRINT premium Black T-Shirt', 499, document.getElementById('size4').value)">
+    Add to Cart
+  </button>
+
+</div>
 
 </div>
 
@@ -333,10 +635,12 @@ footer {
     🟢 Order on WhatsApp
   </button>
 
+
   <!-- UPI PAYMENT BUTTON -->
   <button onclick="payNow()" style="width:100%; background:#1a73e8; color:white; margin-top:8px;">
     💳 Pay via UPI (GPay / PhonePe / Paytm)
   </button>
+  
 
 </div>
 
@@ -346,6 +650,14 @@ footer {
 
 <script>
 let cart = [];
+function generateOrderId() {
+  const date = new Date();
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const d = String(date.getDate()).padStart(2, '0');
+  const rand = Math.floor(1000 + Math.random() * 9000);
+  return `FF-${y}${m}${d}-${rand}`;
+}
 
 function addToCart(name, price, size) {
   if (!size) {
@@ -415,23 +727,28 @@ function whatsappOrder() {
     total += item.price * item.qty;
   });
 
-  const msg =
+const orderId = generateOrderId();
+
+const msg =
 `🛍️ NEW ORDER - FLEXORA FUSION
-Name: ${custName.value}
+🧾 Invoice No: ${orderId}
+
+Customer Name: ${custName.value}
 Phone: ${custPhone.value}
 Address: ${custAddress.value}
 
 Products:
 ${items}
-Total: ₹${total}`;
+Total Amount: ₹${total}
+
+Status: Payment Pending`;
 
   window.open("https://wa.me/918733882916?text=" + encodeURIComponent(msg));
+  window.location.href = "order-success.html?orderId=" + orderId;
 }
+
+ 
 </script>
-
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-
-<script>
 
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
@@ -480,6 +797,45 @@ function payNow() {
 
   const rzp = new Razorpay(options);
   rzp.open();
+}
+
+function placeOrder() {
+
+
+  const custName = document.getElementById("custName");
+  const custAddress = document.getElementById("custAddress");
+  const custPhone = localStorage.getItem("loginPhone");
+
+  if (!custName.value || !custAddress.value) {
+    alert("Fill all details");
+    return;
+  }
+
+  const orderId = "FF" + Date.now();
+  const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+
+  const orderData = {
+    orderId: orderId,
+    phone: custPhone,
+    name: custName.value,
+    address: custAddress.value,
+    items: cart,
+    total: total,
+    date: new Date().toLocaleString()
+  };
+
+  let orders = JSON.parse(localStorage.getItem("orders")) || [];
+  orders.push(orderData);
+  localStorage.setItem("orders", JSON.stringify(orders));
+
+  localStorage.setItem("lastOrderId", orderId);
+
+  window.location.href = "order-success.html";
+}
+
+
+if (localStorage.getItem("isLoggedIn") !== "true") {
+  window.location.href = "login.html";
 }
 </script>
 

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Order Confirmed | FLEXORA FUSION</title>
+</head>
+<body style="text-align:center;font-family:Arial">
+
+<h1>🎉 Order Confirmed!</h1>
+<p>Your Order ID:</p>
+
+<h2 id="oid"></h2>
+
+<a href="my-orders.html">📦 View My Orders</a>
+
+<script>
+document.getElementById("oid").innerText =
+  localStorage.getItem("lastOrderId");
+</script>
+
+</body>
+</html>

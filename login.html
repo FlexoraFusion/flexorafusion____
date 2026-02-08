@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login | FLEXORA FUSION</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #f5f5f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .login-box {
+      background: white;
+      padding: 25px;
+      width: 320px;
+      border-radius: 10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background: black;
+      color: white;
+      cursor: pointer;
+    }
+    .otp {
+      font-weight: bold;
+      color: green;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="login-box">
+  <h2>Login / Signup</h2>
+
+  <input type="tel" id="phone" placeholder="Enter phone number" maxlength="10">
+
+  <button onclick="sendCode()">Send Code</button>
+
+  <input type="text" id="otp" placeholder="Enter 6-digit code">
+
+  <button onclick="verifyCode()">Verify & Login</button>
+
+  <div class="otp" id="showCode"></div>
+</div>
+
+<script>
+let generatedCode = "";
+
+function sendCode() {
+  const phone = document.getElementById("phone").value;
+
+  if (phone.length !== 10) {
+    alert("Enter valid 10-digit phone number");
+    return;
+  }
+
+  generatedCode = Math.floor(100000 + Math.random() * 900000).toString();
+
+  // Demo purpose (SMS gateway needed for real)
+  document.getElementById("showCode").innerText =
+    "Your login code: " + generatedCode;
+
+  localStorage.setItem("loginPhone", phone);
+}
+
+function verifyCode() {
+  const userCode = document.getElementById("otp").value;
+
+  if (userCode === generatedCode) {
+    localStorage.setItem("isLoggedIn", "true");
+    alert("Login successful!");
+    window.location.href = "index.html";
+  } else {
+    alert("Wrong code");
+  }
+}
+</script>
+
+</body>
+</html>
